@@ -308,7 +308,7 @@ class CloseView(View):
         await interaction.response.send_message("Closing ticket in 3 seconds...", ephemeral=False)
         owner_mention = f"<@{owner_id}>" if owner_id else "Unknown"
         await log_ticket(guild, "<:HunterXapp:1512783709198225459> Ticket Closed",
-            f"*Ticket:* #{ticket_name}\n**Closed by:** {closer.mention} ({closer.id})\n**Ticket Owner:** {owner_mention}")
+            f"**Ticket:** #{ticket_name}\n**Closed by:** {closer.mention} ({closer.id})\n**Ticket Owner:** {owner_mention}")
         await asyncio.sleep(3)
         try:
             await channel.delete(reason="Ticket closed")
@@ -367,7 +367,7 @@ class TicketView(View):
         await interaction.response.send_message(f"Your ticket has been created: {ticket_ch.mention}", ephemeral=True)
 
         await log_ticket(guild, "<:HunterXmail:1514600414941675550> Ticket Opened",
-            f"*Ticket:* #{ticket_name}\n**Opened by:** {member.mention} ({member.id})\n**Channel:** {ticket_ch.mention}")
+            f"**Ticket:** #{ticket_name}\n**Opened by:** {member.mention} ({member.id})\n**Channel:** {ticket_ch.mention}")
 
         sv_name_caps = guild.name.split()[0].upper() if guild.name.split() else guild.name.upper()
         ticket_embed = discord.Embed(
