@@ -712,8 +712,8 @@ async def on_guild_join(guild):
                     f"Thankyou For Using <:cutei:1515273052315713617> **HunterX**\n\n"
                     f"Thanks for adding me to **{guild.name}**!\n\n"
                     f"Command\n"
-                    f"`$setup`\nTo setup logs\n\n"
-                    f"`$help`\nShow Commands\n\n"
+                    f"`/setup`\nTo setup logs\n\n"
+                    f"`/help`\nShow Commands\n\n"
                     f"**Prefixes** — `$` | `/` | `x` | `,`"
                 ),
                 color=0xFFFFFF
@@ -730,10 +730,10 @@ async def on_guild_join(guild):
                 embed = discord.Embed(
                     description=(
                         f"**HunterX**\n\n"
-                        f"Thankyou For Using <:cutei:1515273052315713617> **HunterX**\n\n"
+                        f"Thankyou For Using **HunterX**<:cutei:1515273052315713617> \n\n"
                         f"Command\n"
-                        f"`$setup`\nTo setup logs\n\n"
-                        f"`$help`\nShow Commands\n\n"
+                        f"`/setup`\nTo setup logs\n\n"
+                        f"`/help`\nShow Commands\n\n"
                 f"**Prefixes** — `$` | `/` | `x` | `,`"
                     ),
                 )
@@ -748,7 +748,7 @@ async def on_guild_join(guild):
 @bot.hybrid_command()
 async def ping(ctx):
     latency_ms = round(bot.latency * 1000)
-    embed = make_embed("<a:HappyHunterXemoji:1512831297582661803> Ping!", f"**Latency:** `{latency_ms}ms`")
+    embed = make_embed("Ping <a:HappyHunterXemoji:1512831297582661803>", f"**Latency:** `{latency_ms}ms`")
     embed.set_footer(text="HunterX")
     await ctx.send(embed=embed)
 
@@ -811,7 +811,7 @@ async def help(ctx):
     embed = discord.Embed(
         description=(
             f"**Thankyou for using HunterX!**\n"
-            f"[INVITE](<https://discord.com/oauth2/authorize?client_id={bot.user.id}&permissions=8&scope=bot>) | [SUPPORT](https://discord.gg/ehWk58hymn)\n\n"
+            f"[INVITE](<https://discord.com/oauth2/authorize?client_id={bot.user.id}&permissions=8&scope=bot>) | [SUPPORT](https://discord.gg/ehWk58hymn) | [WEBSITE](https://hunterx2.netlify.app/)\n\n"
             f"Select a category below to view commands.\n"
             f"**Prefixes:** `$` | `/` | `x` | `,`"
         ),
@@ -837,7 +837,7 @@ async def whitelist(ctx, member: discord.Member):
 @bot.hybrid_command()
 async def rwhitelist(ctx, member: discord.Member):
     if not is_owner(ctx):
-        return await send_embed(ctx, "<:HunterX:1512787796635422934> No Permission", "Only the server owner or bot owner can use this command.")
+        return await send_embed(ctx, "No Permission", "Only the server owner or bot owner can use this command.")
     gid = str(ctx.guild.id)
     if gid in whitelist_data and str(member.id) in whitelist_data[gid].get("users", {}):
         del whitelist_data[gid]["users"][str(member.id)]
@@ -851,13 +851,13 @@ async def whitelistboard(ctx):
     gid = str(ctx.guild.id)
     users = whitelist_data.get(gid, {}).get("users", {})
     if not users:
-        return await send_embed(ctx, "<:249630gradientgear:1512782705522245712> Whitelist", "No whitelisted users.")
+        return await send_embed(ctx, "Whitelist", "No whitelisted users.")
     desc = ""
     for i, uid in enumerate(users.keys(), 1):
         member = ctx.guild.get_member(int(uid))
         name = member.mention if member else f"<@{uid}>"
         desc += f"**{i}.** {name}\n"
-    embed = make_embed("<:249630gradientgear:1512782705522245712> Whitelist Board", desc)
+    embed = make_embed("Whitelist Board", desc)
     embed.set_footer(text="HunterX")
     await ctx.send(embed=embed)
 
@@ -1437,11 +1437,11 @@ async def antinuke(ctx, action: str):
     if action.lower() == "enable":
         config_data[gid]["antinuke"] = True
         save_config()
-        await send_embed(ctx, "<:HunteXCheck:1518422536558481448> AntiNuke Enabled", "Anti Nuke protection is now **enabled**.")
+        await send_embed(ctx, "AntiNuke", "Anti Nuke protection is now **enabled**.")
     elif action.lower() == "disable":
         config_data[gid]["antinuke"] = False
         save_config()
-        await send_embed(ctx, "<:HunterXsadkitty:1514606490063868074> AntiNuke Disabled", "Anti Nuke protection is now **disabled**.")
+        await send_embed(ctx, "AntiNuke", "Anti Nuke protection is now **disabled**.")
     else:
         await send_embed(ctx, "Invalid", "Usage: `$antinuke enable/disable`")
 
@@ -1454,11 +1454,11 @@ async def antikick(ctx, action: str):
     if action.lower() == "enable":
         config_data[gid]["antikick"] = True
         save_config()
-        await send_embed(ctx, "<:HunteXCheck:1518422536558481448> AntiKick Enabled", "Unauthorized kickers will be **banned**.")
+        await send_embed(ctx, "AntiKick", "Unauthorized kickers will be **banned**.")
     elif action.lower() == "disable":
         config_data[gid]["antikick"] = False
         save_config()
-        await send_embed(ctx, "<:HunterXsadkitty:1514606490063868074> AntiKick Disabled", "AntiKick protection is now **disabled**.")
+        await send_embed(ctx, "AntiKick", "AntiKick protection is now **disabled**.")
     else:
         await send_embed(ctx, "Invalid", "Usage: `$antikick enable/disable`")
 
@@ -1471,11 +1471,11 @@ async def antiban(ctx, action: str):
     if action.lower() == "enable":
         config_data[gid]["antiban"] = True
         save_config()
-        await send_embed(ctx, "<:HunteXCheck:1518422536558481448> AntiBan Enabled", "Unauthorized banners will be **banned**.")
+        await send_embed(ctx, "AntiBan", "Unauthorized banners will be **banned**.")
     elif action.lower() == "disable":
         config_data[gid]["antiban"] = False
         save_config()
-        await send_embed(ctx, "<:HunterXsadkitty:1514606490063868074> AntiBan Disabled", "Anti Ban protection is now **disabled**.")
+        await send_embed(ctx, "AntiBan", "Anti Ban protection is now **disabled**.")
     else:
         await send_embed(ctx, "Invalid", "Usage: `$antiban enable/disable`")
 
@@ -1488,11 +1488,11 @@ async def antibotadd(ctx, action: str):
     if action.lower() == "enable":
         config_data[gid]["antibotadd"] = True
         save_config()
-        await send_embed(ctx, "<:HunteXCheck:1518422536558481448> AntiBotAdd Enabled", "Unauthorized bot additions will result in a **ban**.")
+        await send_embed(ctx, "Anti bot add", "Unauthorized bot additions will result in a **ban**.")
     elif action.lower() == "disable":
         config_data[gid]["antibotadd"] = False
         save_config()
-        await send_embed(ctx, "<:HunterXsadkitty:1514606490063868074> AntiBotAdd Disabled", "AntiBot Add protection is now **disabled**.")
+        await send_embed(ctx, "Anti bot add", "AntiBot Add protection is now **disabled**.")
     else:
         await send_embed(ctx, "Invalid", "Usage: `$antibotadd enable/disable`")
 
@@ -1505,11 +1505,11 @@ async def anticrtadminrole(ctx, action: str):
     if action.lower() == "enable":
         config_data[gid]["anticreateadminrole"] = True
         save_config()
-        await send_embed(ctx, "<:HunteXCheck:1518422536558481448> AntiCrtAdminRole Enabled", "Creating an admin role without whitelist will result in a **ban**.")
+        await send_embed(ctx, "AntiCrt admin role", "Creating an admin role without whitelist will result in a **ban**.")
     elif action.lower() == "disable":
         config_data[gid]["anticreateadminrole"] = False
         save_config()
-        await send_embed(ctx, "<:HunterXsadkitty:1514606490063868074> AntiCrtAdminRole Disabled", "Protection is now **disabled**.")
+        await send_embed(ctx, "AntiCrt admin role", "Protection is now **disabled**.")
     else:
         await send_embed(ctx, "Invalid", "Usage: `$anticrtadminrole enable/disable`")
 
@@ -1522,11 +1522,11 @@ async def anticrtwebhook(ctx, action: str):
     if action.lower() == "enable":
         config_data[gid]["antiwebhookcreate"] = True
         save_config()
-        await send_embed(ctx, "<:HunteXCheck:1518422536558481448> AntiCrtWebhook Enabled", "Unauthorized webhook creation will result in a **ban**.")
+        await send_embed(ctx, "AntiCrtWebhook", "Unauthorized webhook creation will result in a **ban**.")
     elif action.lower() == "disable":
         config_data[gid]["antiwebhookcreate"] = False
         save_config()
-        await send_embed(ctx, "<:HunterXsadkitty:1514606490063868074> AntiCrtWebhook Disabled", "Protection is now **disabled**.")
+        await send_embed(ctx, "AntiCrtWebhook", "Protection is now **disabled**.")
     else:
         await send_embed(ctx, "Invalid", "Usage: `$anticrtwebhook enable/disable`")
 
@@ -1539,11 +1539,11 @@ async def anticrtchannel(ctx, action: str):
     if action.lower() == "enable":
         config_data[gid]["anticreatechannel"] = True
         save_config()
-        await send_embed(ctx, "<:HunteXCheck:1518422536558481448> AntiCrtChannel Enabled", "Unauthorized channel creation will be blocked and deleted.")
+        await send_embed(ctx, "AntiCrtChannel", "Unauthorized channel creation will be blocked and deleted.")
     elif action.lower() == "disable":
         config_data[gid]["anticreatechannel"] = False
         save_config()
-        await send_embed(ctx, "<:HunterXsadkitty:1514606490063868074> AntiCrtChannel Disabled", "Protection is now **disabled**.")
+        await send_embed(ctx, "AntiCrtChannel", "Protection is now **disabled**.")
     else:
         await send_embed(ctx, "Invalid", "Usage: `$anticrtchannel enable/disable`")
 
@@ -1556,11 +1556,11 @@ async def antidelchannel(ctx, action: str):
     if action.lower() == "enable":
         config_data[gid]["antideletechannel"] = True
         save_config()
-        await send_embed(ctx, "<:HunteXCheck:1518422536558481448> AntiDeleteChannel Enabled", "Unauthorized channel deletion will be logged and the user banned.")
+        await send_embed(ctx, "Anti Delete Channel", "Unauthorized channel deletion will be logged and the user banned.")
     elif action.lower() == "disable":
         config_data[gid]["antideletechannel"] = False
         save_config()
-        await send_embed(ctx, "<:HunterXsadkitty:1514606490063868074> AntiDeleteChannel Disabled", "Protection is now **disabled**.")
+        await send_embed(ctx, "Anti Delete Channel", "Protection is now **disabled**.")
     else:
         await send_embed(ctx, "Invalid", "Usage: `$antidelchannel enable/disable`")
 
@@ -1574,11 +1574,11 @@ async def antidelrole(ctx, action: str):
     if action.lower() == "enable":
         config_data[gid]["antideleterole"] = True
         save_config()
-        await send_embed(ctx, "<:HunteXCheck:1518422536558481448> AntiDeleteRole Enabled", "Deleting a role without whitelist will result in a **ban**.")
+        await send_embed(ctx, "Anti Delete Role", "Deleting a role without whitelist will result in a **ban**.")
     elif action.lower() == "disable":
         config_data[gid]["antideleterole"] = False
         save_config()
-        await send_embed(ctx, "<:HunterXsadkitty:1514606490063868074> AntiDeleteRole Disabled", "Protection is now **disabled**.")
+        await send_embed(ctx, "Anti Delete Role", "Protection is now **disabled**.")
     else:
         await send_embed(ctx, "Invalid", "Usage: `$antidelrole enable/disable`")
 
@@ -1665,10 +1665,10 @@ async def warn(ctx, member: discord.Member, *, reason: str = "No reason provided
 
     await send_embed(ctx, "<:HunteXCheck:1518422536558481448> User Warned",
         f"**User:** {member.mention}\n**Warns:** `{count}`\n**Reason:** {reason}{action_taken}")
-    await log_action(ctx.guild, "<:HunterXwarn:1515422027521986720> Member Warned",
+    await log_action(ctx.guild, "Member Warned",
         f"**User:** {member} (`{member.id}`)\n**Warns:** `{count}`\n**Reason:** {reason}\n**Mod:** {ctx.author}",
         member.display_avatar.url)
-    await log_mod_action(ctx.guild, "<:HunterXwarn:1515422027521986720> Member Warned",
+    await log_mod_action(ctx.guild, "Member Warned",
         f"**User:** {member} (`{member.id}`)\n**Warns:** `{count}`\n**Reason:** {reason}\n**Auto Action:** {action_taken.strip() if action_taken else 'None'}\n**Mod:** {ctx.author}",
         member.display_avatar.url)
 
@@ -1766,9 +1766,9 @@ async def allowedlinkboard(ctx):
         lines.append(f"{role.mention if role else f'<@&{rid}>'}")
 
     if not lines:
-        return await send_embed(ctx, "<:249630gradientgear:1512782705522245712> Allowed Link Board", "No users or roles are allowed to send links.")
+        return await send_embed(ctx, "Allowed Link Board", "No users or roles are allowed to send links.")
 
-    embed = make_embed("<:249630gradientgear:1512782705522245712> Allowed Link Board", "\n".join(lines))
+    embed = make_embed("Allowed Link Board", "\n".join(lines))
     embed.set_footer(text="HunterX")
     await ctx.send(embed=embed)
 
@@ -1782,11 +1782,11 @@ async def antilink(ctx, action: str):
     if action.lower() == "enable":
         config_data[gid]["antilink"] = True
         save_config()
-        await send_embed(ctx, "<:HunteXCheck:1518422536558481448> AntiLink Enabled", "Discord invite links will be auto deleted.")
+        await send_embed(ctx, "AntiLink", "Discord invite links will be auto deleted.")
     elif action.lower() == "disable":
         config_data[gid]["antilink"] = False
         save_config()
-        await send_embed(ctx, "<:HunterXsadkitty:1514606490063868074> AntiLink Disabled", "Discord invite links will NOT be deleted.")
+        await send_embed(ctx, "AntiLink", "Discord invite links will NOT be deleted.")
     else:
         await send_embed(ctx, "Invalid", "Usage: `$antilink enable/disable`")
 
@@ -1800,11 +1800,11 @@ async def antispam(ctx, action: str):
     if action.lower() == "enable":
         config_data[gid]["antispam"] = True
         save_config()
-        await send_embed(ctx, "<:HunteXCheck:1518422536558481448> AntiSpam Enabled", "Members who spam 10+ messages rapidly will be timed out for 5 minutes.")
+        await send_embed(ctx, "AntiSpam", "Members who spam 10+ messages rapidly will be timed out for 5 minutes.")
     elif action.lower() == "disable":
         config_data[gid]["antispam"] = False
         save_config()
-        await send_embed(ctx, "<:HunterXsadkitty:1514606490063868074> AntiSpam Disabled", "AntiSpam protection is now **disabled**.")
+        await send_embed(ctx, "AntiSpam", "AntiSpam protection is now **disabled**.")
     else:
         await send_embed(ctx, "Invalid", "Usage: `$antispam enable/disable`")
 
@@ -2305,7 +2305,7 @@ async def boostchannel(ctx, action: str = "setup"):
         try:
             booster_role = await guild.create_role(
                 name="Booster",
-                color=discord.Color.from_rgb(255, 105, 180),
+                color=discord.Color.from_rgb(0, 0, 0),
                 hoist=True,
                 reason="HunterX Boost Setup"
             )
@@ -2407,7 +2407,7 @@ async def botstats(ctx):
     user_count = sum(g.member_count or 0 for g in bot.guilds)
 
     embed = make_embed(
-        "<:249630gradientgear:1512782705522245712> Bot Status",
+        "Bot Status",
         f"**Uptime:** {uptime_str}\n"
         f"**Ping:** `{ping_ms}ms`\n"
         f"**Servers:** `{server_count}`\n"
@@ -2720,9 +2720,9 @@ async def unban(ctx, user_id: str):
         )
         result_embed.set_footer(text="HunterX")
         await msg.edit(embed=result_embed)
-        await log_action(ctx.guild, "<:HunteXCheck:1518422536558481448> Mass Unban",
+        await log_action(ctx.guild, "Mass Unban",
             f"**Moderator:** {ctx.author} (`{ctx.author.id}`)\n**Unbanned:** {success} users\n**Failed:** {failed}")
-        await log_mod_action(ctx.guild, "<:HunteXCheck:1518422536558481448> Mass Unban",
+        await log_mod_action(ctx.guild, "Mass Unban",
             f"**Moderator:** {ctx.author} (`{ctx.author.id}`)\n**Unbanned:** {success} users\n**Failed:** {failed}")
         return
     # ── UNBAN SINGLE USER ─────────────────────────────────────────────────
@@ -2735,7 +2735,7 @@ async def unban(ctx, user_id: str):
         user = await bot.fetch_user(uid)
         await ctx.guild.unban(user)
         embed = make_embed(
-            "<:HunteXCheck:1518422536558481448> Unbanned",
+            "Unbanned",
             f"**User:** {user.mention}\n"
             f"**UserID:** `{user.id}`\n"
             f"**Moderator:** {ctx.author.mention}"
@@ -2745,7 +2745,7 @@ async def unban(ctx, user_id: str):
         await ctx.send(embed=embed)
         await log_action(ctx.guild, "Unbanned",
             f"**User:** {user} (`{user.id}`)\n**Moderator:** {ctx.author} (`{ctx.author.id}`)")
-        await log_mod_action(ctx.guild, "<:HunteXCheck:1518422536558481448> Unbanned",
+        await log_mod_action(ctx.guild, "Unbanned",
             f"**User:** {user} (`{user.id}`)\n**Moderator:** {ctx.author} (`{ctx.author.id}`)", user.display_avatar.url)
     except Exception as e:
         await send_embed(ctx, "<:HunterX:1512787796635422934> Error", str(e))
@@ -2756,11 +2756,11 @@ async def unban(ctx, user_id: str):
 async def banlist(ctx):
     bans = [entry async for entry in ctx.guild.bans()]
     if not bans:
-        return await send_embed(ctx, "<:249630gradientgear:1512782705522245712> Ban List", "No banned users.")
+        return await send_embed(ctx, "Ban List", "No banned users.")
     description = ""
     for i, entry in enumerate(bans, start=1):
         description += f"**{i}.** {entry.user} (`{entry.user.id}`)\n"
-    embed = make_embed("<:249630gradientgear:1512782705522245712> Ban List", description)
+    embed = make_embed("Ban List", description)
     embed.set_footer(text="HunterX")
     await ctx.send(embed=embed)
 
@@ -2772,7 +2772,7 @@ async def kick(ctx, member: discord.Member, *, reason="No reason"):
         avatar = member.display_avatar.url
         await member.kick(reason=reason)
         embed = make_embed(
-            "<:HunteXCheck:1518422536558481448> Kicked",
+            "Kicked",
             f"**User:** {member.mention}\n"
             f"**UserID:** `{member.id}`\n"
             f"**Moderator:** {ctx.author.mention}\n"
@@ -2783,7 +2783,7 @@ async def kick(ctx, member: discord.Member, *, reason="No reason"):
         await ctx.send(embed=embed)
         await log_action(ctx.guild, "__Kicked__",
             f"**User:** {member} ({member.id})\n**Moderator:** {ctx.author} (`{ctx.author.id}`)\n**Reason:** {reason}", avatar)
-        await log_mod_action(ctx.guild, "<:HunteXCheck:1518422536558481448> Member Kicked",
+        await log_mod_action(ctx.guild, "Member Kicked",
             f"**User:** {member} (`{member.id}`)\n**Moderator:** {ctx.author} (`{ctx.author.id}`)\n**Reason:** {reason}", avatar)
     except Exception as e:
         await send_embed(ctx, "<:HunterX:1512787796635422934> Error", str(e))
@@ -2822,10 +2822,10 @@ async def timeout(ctx, member: discord.Member, duration: str, *, reason="No reas
         embed.set_thumbnail(url=member.display_avatar.url)
         embed.set_footer(text="HunterX")
         await ctx.send(embed=embed)
-        await log_action(ctx.guild, "<:HunterXTimeout:1513168503232790668> Time Out",
+        await log_action(ctx.guild, "Time Out",
             f"**User:** {member} ({member.id})\n**Moderator:** {ctx.author} (`{ctx.author.id}`)\n**Duration:** {duration}\n**Reason:** {reason}",
             member.display_avatar.url)
-        await log_mod_action(ctx.guild, "<:SecureXTimeout:1513168503232790668> Timed Out",
+        await log_mod_action(ctx.guild, "Timed Out",
             f"**User:** {member} (`{member.id}`)\n**Moderator:** {ctx.author} (`{ctx.author.id}`)\n**Duration:** {duration}\n**Reason:** {reason}",
             member.display_avatar.url)
     except Exception as e:
@@ -2895,7 +2895,7 @@ async def on_message(message):
                         and message.author.id != message.guild.owner_id):
                     try:
                         await message.delete()
-                        await log_action(message.guild, "<:HunteXCheck:1518422536558481448> Link Deleted",
+                        await log_action(message.guild, "Link Deleted",
                             f"**User:** {message.author} ({message.author.id})\n**Channel:** {message.channel.mention}")
                     except:
                         pass
@@ -2915,7 +2915,7 @@ async def on_message(message):
                     try:
                         until = discord.utils.utcnow() + timedelta(minutes=5)
                         await message.author.edit(timed_out_until=until, reason="HunterX Anti Spam")
-                        await log_action(message.guild, "<:HunteXCheck:1518422536558481448> Anti Spam Timeout",
+                        await log_action(message.guild, "Anti Spam Timeout",
                             f"**User:** {message.author} ({message.author.id}) timed out 5min for spam.")
                     except:
                         pass
@@ -3136,7 +3136,7 @@ async def _check_bot_add(member):
                 await guild.ban(user, reason="HunterX Anti Bot Add")
             except:
                 pass
-            await log_action(guild, "<:staff1:1512771763199545394> Unauthorized Bot Add",
+            await log_action(guild, "Unauthorized Bot Add",
                 f"**Banned Adder:** {user} (`{user.id}`)\n**Banned Bot:** {member}",
                 user.display_avatar.url)
             break
